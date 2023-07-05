@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
 function ExpenseTracker() {
+  const [orderId, setorderId] = useState('');
   const [sellingPrice, setSellingPrice] = useState('');
-  const [productName, setProductName] = useState('');
-  const [category, setCategory] = useState('');
+  const [dish, setDish] = useState('');
   const [table, setTable] = useState('');
   const [products, setProducts] = useState([]);
 
@@ -22,17 +22,16 @@ function ExpenseTracker() {
     event.preventDefault();
 
     const newProduct = {
-      sellingPrice,
-      productName,
-      category,
+    orderId,
+     sellingPrice,
+     dish,
       table,
-      
     };
 
     setProducts([...products, newProduct]);
+    setorderId('');
     setSellingPrice('');
-    setProductName('');
-    setCategory('');
+    setDish('');
     setTable('');
   };
 
@@ -46,23 +45,23 @@ function ExpenseTracker() {
         <label>Unique Order ID:</label>
         <input
           type="number"
-          value={sellingPrice}
-          onChange={(event) => setSellingPrice(event.target.value)}
-          placeholder="Selling Price"
+          value={orderId}
+          onChange={(event) => setorderId(event.target.value)}
+          placeholder="OrderId"
         />
         <label>Choose Price:</label>
         <input
           type="text"
-          value={productName}
-          onChange={(event) => setProductName(event.target.value)}
-          placeholder="Product Name"
+          value={sellingPrice}
+          onChange={(event) => setSellingPrice(event.target.value)}
+          placeholder="Selling Price"
         />
         <label>Choose a Dish:</label>
         <input
           type="text"
-          value={category}
-          onChange={(event) => setCategory(event.target.value)}
-          placeholder="Category"
+          value={dish}
+          onChange={(event) => setDish(event.target.value)}
+          placeholder="Dish"
         />
         <label>Choose a Table:</label>
         <select
@@ -71,6 +70,7 @@ function ExpenseTracker() {
           value={table}
           onChange={(event) => setTable(event.target.value)}
         >
+          <option value="Table">Table </option>
           <option value="Table1">Table 1</option>
           <option value="Table2">Table 2</option>
           <option value="Table3">Table 3</option>
@@ -78,19 +78,59 @@ function ExpenseTracker() {
         <button type="submit">Add to bill</button>
       </form>
 
-      <ul>
-        {products.map((product, index) => (
-          <li key={index}>
-            <div>{product.sellingPrice}</div>
-            <div>{product.productName}</div>
-            <div>{product.category}</div>
-            <div>{product.table}</div>
-            <button onClick={() => deleteProduct(index)}>Delete Order</button>
-          </li>
-        ))}
-      </ul>
+      <div>
+        <h3>Orders</h3>
+        <h3>Table 1:</h3>
+        <ul>
+          {products
+            .filter((product) => product.table === 'Table1')
+            .map((product, index) => (
+              <li key={index}>
+                <div> {product.orderId}-{product.sellingPrice}-{product.dish} 
+                <button onClick={() => deleteProduct(index)}>
+                  Delete Order
+                </button>
+                 </div>
+               </li>
+            ))}
+        </ul>
+      </div>
+
+      <div>
+        <h3>Table 2:</h3>
+        <ul>
+          {products
+            .filter((product) => product.table === 'Table2')
+            .map((product, index) => (
+              <li key={index}>
+                <div> {product.orderId}-{product.sellingPrice}-{product.dish}
+                <button onClick={() => deleteProduct(index)}>
+                  Delete Order
+                </button>
+                 </div>
+              </li>
+            ))}
+        </ul>
+      </div>
+
+      <div>
+        <h3>Table 3:</h3>
+        <ul>
+          {products
+            .filter((product) => product.table === 'Table3')
+            .map((product, index) => (
+              <li key={index}>
+                <div> {product.orderId}-{product.sellingPrice}-{product.dish}
+                <button onClick={() => deleteProduct(index)}>
+                  Delete Order
+                </button>
+                 </div>
+              </li>
+            ))}
+        </ul>
+      </div>
     </div>
   );
 }
-export default ExpenseTracker;
 
+export default ExpenseTracker;
